@@ -3,6 +3,9 @@ import PropTypes from 'prop-types';
 import css from "../ContactsEditor/ContactsEditor.module.css"
 
 class ContactsEditor extends Component{
+    static propTypes={
+        onSubmit:PropTypes.func.isRequired
+    }
     state={
         name:"",
         number: ''
@@ -14,8 +17,11 @@ class ContactsEditor extends Component{
     }   
     handleSubmit=(evt)=>{
         evt.preventDefault();
-        this.props.onSubmit(this.state)
-        this.reset();
+        if(this.props.onSubmit(this.state)!==1)
+        {
+            this.reset();
+        }
+        
     }
     reset=()=>{
         this.setState({name:"",number:""})
@@ -60,8 +66,6 @@ render(){
 }
 
 
-ContactsEditor.propTypes={
-    onSubmit:PropTypes.func.isRequired
-}
+
 
 export default ContactsEditor
